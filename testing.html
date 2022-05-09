@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+<style>
+.box {
+  width:auto;
+  background: #2969f1;
+  padding: 20px;
+  text-align: center;
+  font-weight: 900;
+  color: #fff;
+  font-family: arial;
+  position: relative;
+}
+.reciever:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid #2969f1;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #2969f1;
+  border-bottom: 10px solid transparent;
+  left: 19px;
+  bottom: -19px;
+}
+.sender:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #2969f1;
+  border-top: 10px solid #2969f1;
+  border-bottom: 10px solid transparent;
+  right: 19px;
+  bottom: -19px;
+}
+</style>
+</head>
+<body>
+<div class="box reciever" style="float:left">I'm speech bubble</div>
+</br>
+<div class="box sender" style="float:right">I'm speech bubble</div>
+
+</body>
+</html>

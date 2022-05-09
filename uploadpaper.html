@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.1" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>uploadpaper</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link
+	rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+	<link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+	<link rel="stylesheet" href="css/mdb.min.css" />
+	<style>
+		
+		</style>
+
+</head>
+
+<body>
+	<div id="mySidebar" class="sidebar">
+		<img src="photos/logo.jpg" class="circular--square"/>
+  <a href="Registration.html"><i class="material-icons md-48 md-dark des">account_box</i>Registration</a>
+  <button class="accordion"><i class="material-icons md-48 md-dark des">article</i>Exam Paper</button>
+<div class="panel">
+    <a href="makepaper.html"><i class="material-icons md-48 md-dark des">edit_note</i>Make Paper</a>
+   <a href="uploadpaper.html"><i class="material-icons md-48 md-dark des">upload_file</i>Upload Paper</a>
+</div>
+  <a href="Exam.html"><i class="material-icons md-48 md-dark des">note_add</i>Exam</a>
+  <a href="Result.html"><i class="material-icons md-48 md-dark des">leaderboard</i>Result</a>
+  <a href="Statistics.html"><i class="material-icons md-48 md-dark des">analytics</i>Statistics</a>
+  <a href="Answers.html"><i class="material-icons md-48 md-dark des">fact_check</i>Answers</a>
+  <a href="Message.html"><i class="material-icons md-48 md-dark des">chat</i>Message</a>
+  <a href="Index.html"><i class="material-icons md-48 md-dark des">logout</i>Logout</a>
+</div>
+
+<div id="main">
+  <div class="container" onclick="myFunction(this),openNav(),closeNav()">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+<div class="card">
+	<label for="formFileLg" style="margin-left:20px;" class="form-label">Pick the Excel sheet:</label>
+	<input class="form-control form-control-lg" id="formFileLg" style="margin-left:20px;width:80%" type="file" />
+</br>
+	<button type="button" class="btn btn-primary" style="margin:auto;width:30%;height:40px;">Upload</button>
+</br>
+	<a
+	data-mdb-toggle="collapse"
+	href="#collapseWithScrollbar"
+	role="button"
+	aria-expanded="false"
+	aria-controls="collapseExample"
+	style="margin:auto;"
+>How to upload?</a>
+<div class="collapse mt-3 scroll-section" id="collapseWithScrollbar"  style="width:100%;height:100%;">
+<div id="carouselExampleCrossfade" class="carousel slide carousel-fade carousel-dark" data-mdb-ride="carousel">
+<div class="carousel-indicators">
+<button
+type="button"
+data-mdb-target="#carouselExampleCrossfade"
+data-mdb-slide-to="0"
+class="active"
+aria-current="true"
+aria-label="Slide 1"
+></button>
+<button
+type="button"
+data-mdb-target="#carouselExampleCrossfade"
+data-mdb-slide-to="1"
+aria-label="Slide 2"
+></button>
+<button
+type="button"
+data-mdb-target="#carouselExampleCrossfade"
+data-mdb-slide-to="2"
+aria-label="Slide 3"
+></button>
+</div>
+<div class="carousel-inner">
+<div class="carousel-item active">
+<img src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp" class="d-block w-100" alt="Wild Landscape"/>
+</div>
+<div class="carousel-item">
+<img src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp" class="d-block w-100" alt="Camera"/>
+</div>
+<div class="carousel-item">
+<img src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp" class="d-block w-100" alt="Exotic Fruits"/>
+</div>
+</div>
+<button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleCrossfade" data-mdb-slide="prev">
+<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+<span class="visually-hidden">Previous</span>
+</button>
+<button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleCrossfade" data-mdb-slide="next">
+<span class="carousel-control-next-icon" aria-hidden="true"></span>
+<span class="visually-hidden">Next</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+	<script>
+		
+		var val=0;
+		function openNav() {
+		  document.getElementById("mySidebar").style.width = "250px";
+		  document.getElementById("main").style.marginLeft = "250px";
+		}
+		
+		function closeNav() {
+		  val+=1
+		  if(val%2==0){
+		  document.getElementById("mySidebar").style.width = "0";
+		  document.getElementById("main").style.marginLeft= "0";
+		  }
+		}
+		function myFunction(x) {
+		  x.classList.toggle("change");
+		}
+		</script>
+		<script>
+			var acc = document.getElementsByClassName("accordion");
+			var i;
+			
+			for (i = 0; i < acc.length; i++) {
+			  acc[i].addEventListener("click", function() {
+				this.classList.toggle("active1");
+				var panel = this.nextElementSibling;
+				if (panel.style.maxHeight) {
+				  panel.style.maxHeight = null;
+				} else {
+				  panel.style.maxHeight = panel.scrollHeight + "px";
+				} 
+			  });
+			}
+			</script>
+	<script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>

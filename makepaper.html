@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.1" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Makepaper</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+	<link
+	rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+	<link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+	<link rel="stylesheet" href="css/mdb.min.css" />
+	<style>
+		.textareaclass{
+			width: 100%;
+			font-size:18px;
+			font-family: 'Open Sans';
+		}
+		.textfieldclass{
+			width:100%;
+			font-size:18px;
+			font-family: 'Open Sans';
+		}
+		.textfieldclass:focus{
+			outline-color: rgb(52, 52, 235);
+			border: width 1px;
+		}
+		.textareaclass:focus{
+			outline-color: rgb(52, 52, 235);
+			border: width 1px;
+		}
+		.myicon{
+			cursor:pointer;
+		}	
+		.no-select {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+		}
+		.astyle{
+			font-size:15px;
+			color:black;
+			text-decoration:none;
+			display:inline;
+			font-family: 'Open Sans';
+		}
+		.astyle:hover{
+			color:rgb(39, 39, 224);
+			text-decoration:none;
+			cursor: pointer;
+		}
+		.istyle{
+			font-size:20px;
+			display:inline-flex;
+			vertical-align:top;
+		}
+	</style>
+	<script>
+		var questions=new Array();
+		var currentrow="";
+		var modal;
+		function addquestion(type,question,options){
+			    var val=parseInt(currentrow.charAt(currentrow.length-1))
+				if(val<=questions.length)
+				{
+					questions[val-1].questiontype=type;
+					questions[val-1].question=question;
+					questions[val-1].options=options;
+				}
+				else
+				questions.push({questiontype:type,question:question,options:options})
+				console.log(JSON.stringify(questions))
+		}
+		function setRow(text){
+			currentrow=text;
+			console.log(currentrow);
+		}
+		function setBlank(){
+				var table=document.getElementById("myquestiontable");
+				var count=table.rows.length;
+				var i;
+				console.log("thse cout is"+count);
+				for(i=1;i<count;i++){
+						if(table.rows[i].id.toString()==currentrow)
+						break;
+				}
+				var textbefore=document.getElementById("textbefore").value;
+				var textafter=document.getElementById("textafter").value;
+				var x=document.getElementById("myquestiontable").rows[i].cells;
+				x[1].innerHTML=textbefore+" __________ "+textafter;
+				modal.hide();
+				addquestion("Blank",textbefore+" __________ "+textafter,"");
+
+		}
+		function setSinglechoice(){
+			var table=document.getElementById("myquestiontable");
+				var count=table.rows.length;
+				var i;
+				for(i=1;i<count;i++){
+						if(table.rows[i].id.toString()==currentrow)
+						break;
+				}
+				var table2=document.getElementById("question_table")
+				var myarray=new Array();
+				var count2=table2.rows.length;
+				var j,k;
+				console.log("Number of rows"+count2)
+				for(j=1;j<count2;j++){
+					console.log("optionrow"+j);
+						myarray.push(document.getElementById("optionrow"+j).value)
+				}
+				var displaystring=""
+				displaystring+=document.getElementById("singlechoice").value+"</br>"
+				for(j=1;j<count2;j++){
+				  displaystring+=j+") "+"<input type='radio' name='options1'>"+" "+myarray[j-1]+"</br>"
+				}
+				var x=document.getElementById("myquestiontable").rows[i].cells;
+				x[1].innerHTML=displaystring;
+				modal.hide();
+				addquestion("singlechoice",document.getElementById("singlechoice").value,myarray);
+		}
+		function setMultiplechoice(){
+			var table=document.getElementById("myquestiontable");
+				var count=table.rows.length;
+				var i;
+				for(i=1;i<count;i++){
+						if(table.rows[i].id.toString()==currentrow)
+						break;
+				}
+				var table2=document.getElementById("question_table")
+				var myarray=new Array();
+				var count2=table2.rows.length;
+				var j,k;
+				console.log("Number of rows"+count2)
+				for(j=1;j<count2;j++){
+					console.log("optionrow"+j);
+						myarray.push(document.getElementById("optionrow"+j).value)
+				}
+				var displaystring=""
+				displaystring+=document.getElementById("multichoice").value+"</br>"
+				for(j=1;j<count2;j++){
+				  displaystring+=j+") "+"<input type='checkbox' name='options1'>"+" "+myarray[j-1]+"</br>"
+				}
+				var x=document.getElementById("myquestiontable").rows[i].cells;
+				x[1].innerHTML=displaystring;
+				modal.hide();
+				addquestion("multichoice",document.getElementById("multichoice").value,myarray);
+		}
+		function savechange(){
+			var option=document.getElementById("myoption").value;
+			if(option=="Blank")
+			setBlank();
+			if(option=="Single Choice")
+			setSinglechoice();
+			if(option=="Multiple Choice")
+			setMultiplechoice();
+		}
+		function cleartablerows(){
+			var mytable=document.getElementById("question_table")
+			var rowCount = mytable.rows.length;
+            for (var i = rowCount - 1; i >= 0; i--) {
+            mytable.deleteRow(i);
+        }
+		}
+		function addrow(){
+			var mytable=document.getElementById("question_table")
+			var count=mytable.rows.length
+			var row=mytable.insertRow(count)
+			var cell=row.insertCell(0)
+			cell.innerHTML='<input type="text" class="textfieldclass" id=\'optionrow'+count.toString()+'\' placeholder="Enter Option '+count.toString()+'" />'
+		}
+		function delrow(){
+			var mytable=document.getElementById("question_table")
+			var count=mytable.rows.length
+			if(count!=2)
+			mytable.deleteRow(count-1)
+		}
+		function blank(){
+				var mytable=document.getElementById("question_table")
+				var count=mytable.rows.length;
+				var row=mytable.insertRow(count);
+				var cell1=row.insertCell(0);
+				cell1.innerHTML="<textarea rows='5' placeholder='Text before blank' id='textbefore' class='textareaclass'></textarea>"
+			    var row1=mytable.insertRow(count+1);
+				var cell2=row1.insertCell(0);
+				cell2.innerHTML="<p>____________________(Blank space in the question)</p>"
+				var row3=mytable.insertRow(count+2);
+				var cell3=row3.insertCell(0);
+				cell3.innerHTML="<textarea rows='5' placeholder='Text After blank' id='textafter' class='textareaclass'></textarea>"
+			    
+		}
+		function singlechoice(){
+				var mytable=document.getElementById("question_table")
+				mytable.innerHTML=' <tr>'+
+					 ' <td  colspan="2"><textarea class="textareaclass" id="singlechoice" placeholder="Enter the question" rows="5" ></textarea></td>'+
+				 ' </tr>'+
+				  '<tr>'+
+					 ' <td style="width:90%"><input type="text" class="textfieldclass" id="optionrow1" placeholder="Enter Option 1" /></td>'+
+					  '<td style="width:10%">'+
+						'<i onclick="addrow()" class="material-icons md-48 md-dark myicon no-select">add_circle</i>'+
+						'<i onclick="delrow()" class="material-icons md-48 md-dark myicon no-select">remove_circle</i>'+
+					 ' </td>'+
+				  '</tr>'
+		}
+		function multichoice(){
+			var mytable=document.getElementById("question_table")
+				mytable.innerHTML=' <tr>'+
+					 ' <td  colspan="2"><textarea class="textareaclass" id="multichoice" placeholder="Enter the question" rows="5" ></textarea></td>'+
+				 ' </tr>'+
+				  '<tr>'+
+					 ' <td style="width:90%"><input type="text" id="optionrow1" class="textfieldclass" placeholder="Enter Option 1" /></td>'+
+					  '<td style="width:10%">'+
+						'<i onclick="addrow()" class="material-icons md-48 md-dark myicon no-select">add_circle</i>'+
+						'<i onclick="delrow()" class="material-icons md-48 md-dark myicon no-select">remove_circle</i>'+
+					 ' </td>'+
+				  '</tr>'
+		}
+		function question(){
+			cleartablerows();
+			var option=document.getElementById("myoption").value;
+			if(option=="Blank")
+			blank();
+			if(option=="Single Choice")
+			singlechoice();
+			if(option=="Multiple Choice")
+			multichoice();
+
+		}
+		function display(){
+			const myModalEl = document.getElementById('exampleModal')
+             modal = new mdb.Modal(myModalEl)
+            modal.show()
+		}
+		function changeindex(){
+				var table=document.getElementById("myquestiontable");
+				var count=table.rows.length;
+				for(var i=1;i<count;i++){
+					var x = document.getElementById("myquestiontable").rows[i].cells;
+  					x[0].innerHTML = i.toString();
+				}
+		}
+		function deleterowbytag(rowvalue){
+				var table=document.getElementById("myquestiontable");
+				var i=0;
+				var count=table.rows.length;
+				for(i=1;i<count;i++){
+						if(table.rows[i].id.toString()==rowvalue)
+						break;
+				}
+				if(i!=1 && i!=count)
+				document.getElementById("myquestiontable").deleteRow(i);
+				changeindex();
+		}
+		function create(rowvalue){
+			document.getElementById("myoption").selectedIndex =0;
+			 cleartablerows();
+			var table = document.getElementById("myquestiontable");
+			var count=document.getElementById("myquestiontable").rows.length;
+			var i=0;
+			var flag=true;
+			for(i=1;i<count;i++){
+				if(table.rows[i].id.toString()==rowvalue.toString()){
+					flag=false;
+					break;
+				}
+			}
+			console.log(i)
+			if(flag==true)
+			i=count-1;
+  			var row = table.insertRow(i+1);
+			row.id="row"+count.toString()
+  			var cell1 = row.insertCell(0);
+  			var cell2 = row.insertCell(1);
+			var cell3=row.insertCell(2);
+  			cell2.innerHTML ="Edit to change the Content";
+			cell3.innerHTML = "<td>"+
+			'<div onclick="setRow(\'row'+count.toString()+'\');display()">'+
+				"<p class='astyle'><i class='material-icons md-48 md-dark istyle'>edit</i>Edit</p>"+
+			"</div>"+
+			'<div onclick="deleterowbytag(\'row'+count.toString()+'\')">'+
+			"<p class='astyle'><i class='material-icons md-48 md-dark istyle'>delete_outline</i>Delete</p>"+
+			"</div>"+
+			'<div onclick="create(\'row'+count.toString()+'\')">'+
+			'<p class="astyle" ><i class="material-icons md-48 md-dark istyle">add</i>Add</p>'+
+			"</div>"+
+		"</td>";
+		changeindex();
+		}
+	</script>
+
+</head>
+
+<body>
+	<div id="mySidebar" class="sidebar">
+		<img src="photos/logo.jpg" class="circular--square"/>
+  <a href="Registration.html"><i class="material-icons md-48 md-dark des">account_box</i>Registration</a>
+  <button class="accordion"><i class="material-icons md-48 md-dark des">article</i>Exam Paper</button>
+<div class="panel">
+    <a href="makepaper.html"><i class="material-icons md-48 md-dark des">edit_note</i>Make Paper</a>
+   <a href="uploadpaper.html"><i class="material-icons md-48 md-dark des">upload_file</i>Upload Paper</a>
+</div>
+  <a href="Exam.html"><i class="material-icons md-48 md-dark des">note_add</i>Exam</a>
+  <a href="Result.html"><i class="material-icons md-48 md-dark des">leaderboard</i>Result</a>
+  <a href="Statistics.html"><i class="material-icons md-48 md-dark des">analytics</i>Statistics</a>
+  <a href="Answers.html"><i class="material-icons md-48 md-dark des">fact_check</i>Answers</a>
+  <a href="Message.html"><i class="material-icons md-48 md-dark des">chat</i>Message</a>
+  <a href="Index.html"><i class="material-icons md-48 md-dark des">logout</i>Logout</a>
+</div>
+
+<div id="main">
+  <div class="container" onclick="myFunction(this),openNav(),closeNav()">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+<div class="table-responsive">
+<table class="table table-borderless" id="myquestiontable">
+	<thead>
+	  <tr>
+		<th scope="col" style="width:10%;">Q.no</th>
+		<th scope="col" style="width:80%;">Question</th>
+		<th scope="col" style="width:10%;"></th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr id="row1">
+		<td>1</td>
+		<td>Edit to change the Content</td>
+		<td>
+			<div onclick="setRow('row1');display()">
+				<p class="astyle"><i class="material-icons md-48 md-dark istyle">edit</i>Edit</p>
+			</div>
+			<div onclick="deleterowbytag('row1')">
+			<p class="astyle"><i class="material-icons md-48 md-dark istyle">delete_outline</i>Delete</p>
+			</div>
+			<div  onclick="create('row1')">
+				<p class="astyle"><i class="material-icons md-48 md-dark istyle">add</i>Add</p>
+			</div>
+		</td>
+	  </tr>
+	</tbody>
+  </table>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-fullscreen">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">QUESTION</h5>
+		  <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<select class="form-select selectstyle" id="myoption" style="box-shadow:none" onchange="question()">
+				<option>Question Type</option>
+				<option>Blank</option>
+				<option>Single Choice</option>
+				<option>Multiple Choice</option>
+			  </select>
+			  <table class="table" id="question_table">
+
+			  </table>
+
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+		  <button type="button" class="btn btn-primary" onclick="savechange()">Save changes</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+</div>
+			
+	<script>
+		
+		var val=0;
+		function openNav() {
+		  document.getElementById("mySidebar").style.width = "250px";
+		  document.getElementById("main").style.marginLeft = "250px";
+		}
+		
+		function closeNav() {
+		  val+=1
+		  if(val%2==0){
+		  document.getElementById("mySidebar").style.width = "0";
+		  document.getElementById("main").style.marginLeft= "0";
+		  }
+		}
+		function myFunction(x) {
+		  x.classList.toggle("change");
+		}
+		</script>
+		<script>
+			var acc = document.getElementsByClassName("accordion");
+			var i;
+			
+			for (i = 0; i < acc.length; i++) {
+			  acc[i].addEventListener("click", function() {
+				this.classList.toggle("active1");
+				var panel = this.nextElementSibling;
+				if (panel.style.maxHeight) {
+				  panel.style.maxHeight = null;
+				} else {
+				  panel.style.maxHeight = panel.scrollHeight + "px";
+				} 
+			  });
+			}
+			</script>
+	<script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>

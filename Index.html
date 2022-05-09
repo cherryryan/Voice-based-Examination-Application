@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.1" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Login | Student</title>
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/index.css">
+	<link
+	rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+	<link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+	<link rel="stylesheet" href="css/mdb.min.css" />
+	<script>
+		  function showPassword1() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+	</script>
+</head>
+
+<body>
+	  <div class="split left">
+		<div id="carouselExampleInterval" class="carousel slide"  data-mdb-ride="carousel">
+			<div class="carousel-inner">
+			  <div class="carousel-item active" data-mdb-interval="2000">
+				<img src="photos/exam.jpg" class="d-block" alt="Wild Landscape" />
+			  </div>
+			  <div class="carousel-item" data-mdb-interval="2000">
+				<img src="photos/image3.jpg" class="d-block " alt="Camera" />
+			  </div>
+			  <div class="carousel-item"  data-mdb-interval="2000">
+				<img src="photos/image4.jpg" class="d-block " alt="Exotic Fruits"/>
+			  </div>
+			</div>
+			<button class="carousel-control-prev" data-mdb-target="#carouselExampleInterval" type="button" style="color:blue" data-mdb-slide="prev">
+			  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			  <span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" data-mdb-target="#carouselExampleInterval" type="button" style="color:blue" data-mdb-slide="next">
+			  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			  <span class="visually-hidden">Next</span>
+			</button>
+		  </div>
+	  </div>
+	  <div class="split right">
+		<div class="card" style="width:70%;margin-top:25%;margin-left:15%">
+			<br class="card-body">
+				<div>
+					<img src="photos/logo.jpg" style="float: left;width:15%;height:15%;"/>
+					<h2 >Exam Portal</h2>
+				</div>
+			</br>
+			<div class="form-outline">
+				<input type="text" id="formControlLg" class="form-control form-control-lg" />
+				<label class="form-label" for="formControlLg">Enter UserName</label>
+			  </div>
+			</br>
+			  <div class="form-outline card-text">
+				<input type="password" id="password" class="form-control form-control-lg" />
+				<label class="form-label" for="typePassword">Enter Password</label>
+			  </div>
+			</br>
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" onclick="showPassword1()" value="" id="flexCheckDefault" />
+				<label class="form-check-label" for="flexCheckDefault">Show Password</label>
+			  </div>
+			</br>
+			  <button type="button" class="btn btn-primary">Login</button>
+			</div>
+		  </div>
+	<script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>

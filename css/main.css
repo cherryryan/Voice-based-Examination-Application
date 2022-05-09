@@ -1,0 +1,179 @@
+body {
+	font-family: "Lato", sans-serif;
+  }
+  .container {
+	display: inline-block;
+	cursor: pointer;
+	padding: 2px 16px;
+  }
+  .container1 {
+	padding-left:16px;
+	padding-top:8px
+  }
+  .selectstyle:focus{
+	border-color:rgb(0, 89, 255);
+	
+  }
+  .card {
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	transition: 0.3s;
+	width: 50%;
+	border-radius: 5px;
+	margin-left:25%;
+	margin-right:20%;
+	margin-top:10px;
+  }
+  .card1{
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	transition: 0.3s;
+	width: 40%;
+	border-radius: 5px;
+	margin-left:30%;
+	margin-right:20%;
+	margin-top:10px;
+  }
+  .card1:hover{
+	box-shadow: 3px 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  .card:hover {
+	box-shadow: 3px 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  .bar1, .bar2, .bar3 {
+	width: 35px;
+	height: 5px;
+	background-color: #333;
+	margin: 6px 0;
+	transition: 0.4s;
+  }
+  
+  .change .bar1 {
+	-webkit-transform: rotate(-45deg) translate(-9px, 6px);
+	transform: rotate(-45deg) translate(-9px, 6px);
+  }
+  
+  .change .bar2 {opacity: 0;}
+  
+  .change .bar3 {
+	-webkit-transform: rotate(45deg) translate(-8px, -8px);
+	transform: rotate(45deg) translate(-8px, -8px);
+  }
+  .sidebar {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: rgb(36, 35, 44);
+	overflow-x: hidden;
+	border:solid 1px ;
+	transition: 0.5s;
+	padding-top: 60px;
+  }
+  .des{
+	  font-size:20px;
+	  
+  }
+  .set{
+	font-size:25px;
+	font-weight:bolder;
+}
+  .circular--square { border-radius: 50%;
+  width:50%;
+height:20%;
+margin-left:55px }
+  .circular--square { border-top-left-radius: 50% 50%; border-top-right-radius: 50% 50%; border-bottom-right-radius: 50% 50%; border-bottom-left-radius: 50% 50%; }
+  .sidebar a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 20px;
+	color: #ffffff;
+	display: block;
+	transition: 0.3s;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  
+  .sidebar a:hover {
+	color: #44f3f3;
+	border-left:3px solid;
+	border-left-color: #44f3f3
+  }
+  
+  .sidebar .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+  }
+  
+  .openbtn {
+	font-size: 20px;
+	cursor: pointer;
+	background-color: #111;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+  }
+  
+  .openbtn:hover {
+	background-color: #444;
+  }
+  
+  #main {
+	transition: margin-left .5s;
+	padding: 16px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+	.sidebar {padding-top: 15px;}
+	.sidebar a {font-size: 18px;}
+  }
+  .accordion {
+	background-color:rgb(36, 35, 44);
+	color: rgb(255, 255, 255);
+	cursor: pointer;
+	padding: 8px 8px 8px 32px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 20px;
+	transition: 0.4s;
+
+  }
+  
+  .active1, .accordion:hover {
+	color:#44f3f3;
+	border-left:3px solid;
+	border-left-color: #44f3f3
+  }
+  
+  .accordion:after {
+	font-family: "Material Icons";
+	content: "\e5cf";
+	font-weight: bold;
+	margin-left: 5px;
+  }
+  
+  .active1:after {
+	  font-family: "Material Icons";
+	content: "\e5ce";
+  }
+  
+  .panel {
+	padding: 0 18px;
+	background-color: rgb(36, 35, 44);
+	max-height: 0;
+	color:white;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	font: size 20px;
+  }
+  .panel:hover{
+	  color: #44f3f3;
+  }
+  .disaplayInput{
+	display: none;
+	}

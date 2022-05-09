@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.1" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Statistics</title>
+	<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link
+	rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+	<link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+	<link rel="stylesheet" href="css/mdb.min.css" />
+<style>
+  .middle{
+    margin:0 auto;
+    text-align:center;
+  }
+</style>
+</head>
+
+<body>
+	<div id="mySidebar" class="sidebar">
+		<img src="photos/logo.jpg" class="circular--square"/>
+  <a href="Registration.html"><i class="material-icons md-48 md-dark des">account_box</i>Registration</a>
+  <button class="accordion"><i class="material-icons md-48 md-dark des">article</i>Exam Paper</button>
+<div class="panel">
+    <a href="makepaper.html"><i class="material-icons md-48 md-dark des">edit_note</i>Make Paper</a>
+   <a href="uploadpaper.html"><i class="material-icons md-48 md-dark des">upload_file</i>Upload Paper</a>
+</div>
+  <a href="Exam.html"><i class="material-icons md-48 md-dark des">note_add</i>Exam</a>
+  <a href="Result.html"><i class="material-icons md-48 md-dark des">leaderboard</i>Result</a>
+  <a href="Statistics.html"><i class="material-icons md-48 md-dark des">analytics</i>Statistics</a>
+  <a href="Answers.html"><i class="material-icons md-48 md-dark des">fact_check</i>Answers</a>
+  <a href="Message.html"><i class="material-icons md-48 md-dark des">chat</i>Message</a>
+  <a href="Index.html"><i class="material-icons md-48 md-dark des">logout</i>Logout</a>
+</div>
+
+<div id="main">
+  <div class="container" onclick="myFunction(this),openNav(),closeNav()">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+<select class="form-select selectstyle" id="myoption" style="box-shadow:none" onchange="question()">
+	<option>paper1</option>
+	<option>paper2</option>
+	<option>paper3</option>
+	<option>paper4</option>
+  </select>
+</br>
+</br>
+<div class="middle">
+<h3>Marks ranges</h3>
+<canvas class="middle" id="myChart" style="width:100%;max-width:600px"></canvas>
+</div>
+</br>
+</br>
+<div class="middle">
+<h3>Participation</h3>
+<canvas class="middle" id="myChart1" style="width:100%;max-width:600px"></canvas>
+</div>
+</br>
+</br>
+<div class="middle">
+	<h3>Pass Percentage</h3>
+	<canvas class="middle" id="myChart2" style="width:100%;max-width:600px"></canvas>
+</div>
+</div>
+</br>
+</br>
+<div class="middle">
+	<h3>People DepartmentWise</h3>
+	<canvas class="middle" id="myChart3" style="width:100%;max-width:600px"></canvas>
+</div>
+</div>
+	<script>
+var xValues = [50,60,70,80,90,100,110,120,130,140,150];
+var yValues = [7,8,8,9,9,9,10,11,14,14,15];
+
+new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      yAxes: [{ticks: {min: 6, max:16}}],
+    }
+  }
+});
+	</script>
+	<script>
+		var xValues = ["blind","normal"];
+var yValues = [60,40];
+var barColors = [
+  "#b91d47",
+  "#2b5797",
+];
+
+new Chart("myChart1", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true
+    }
+  }
+});
+	</script>
+	<script>
+		var xValues = ["fail","pass"];
+var yValues = [60,40];
+var barColors = [
+  "#dc143c",
+  "#48d1cc",
+];
+
+new Chart("myChart2", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true
+    }
+  }
+});
+	</script>
+	<script>
+		
+		var val=0;
+		function openNav() {
+		  document.getElementById("mySidebar").style.width = "250px";
+		  document.getElementById("main").style.marginLeft = "250px";
+		}
+		
+		function closeNav() {
+		  val+=1
+		  if(val%2==0){
+		  document.getElementById("mySidebar").style.width = "0";
+		  document.getElementById("main").style.marginLeft= "0";
+		  }
+		}
+		function myFunction(x) {
+		  x.classList.toggle("change");
+		}
+		</script>
+    <script>
+      var xValues = ["CSE", "ECE", "MECH", "EEE", "IT"];
+      var yValues = [55, 49, 44, 24, 15];
+      var barColors = ["red", "green","blue","orange","brown"];
+      
+      new Chart("myChart3", {
+        type: "bar",
+        data: {
+          labels: xValues,
+          datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+          }]
+        },
+        options: {
+          legend: {display: false},
+          title: {
+            display: true
+          }
+        }
+      });
+      </script>
+		<script>
+			var acc = document.getElementsByClassName("accordion");
+			var i;
+			
+			for (i = 0; i < acc.length; i++) {
+			  acc[i].addEventListener("click", function() {
+				this.classList.toggle("active1");
+				var panel = this.nextElementSibling;
+				if (panel.style.maxHeight) {
+				  panel.style.maxHeight = null;
+				} else {
+				  panel.style.maxHeight = panel.scrollHeight + "px";
+				} 
+			  });
+			}
+			</script>
+
+	<script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>
