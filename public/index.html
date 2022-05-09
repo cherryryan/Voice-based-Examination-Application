@@ -42,6 +42,25 @@
     }
 }
 	</script>
+	<script>
+		function validate(){
+			var para=document.getElementById("validation");
+			para.style.display="block";
+		}
+     
+		function sleep(ms) {
+	  return new Promise(resolve => setTimeout(resolve, ms));
+  }		 
+  async function load(){
+  modal.show()
+  await sleep(13000);
+  dispose()
+		}
+		function dispose(){
+		  console.log("hello")
+  modal.hide();
+		}
+	  </script>
 </head>
 
 <body>
@@ -78,22 +97,41 @@
 			</br>
 			<div class="form-outline">
 				<input type="text" id="formControlLg" class="form-control form-control-lg" />
-				<label class="form-label" for="formControlLg">Enter Your UserName</label>
+				<label class="form-label" for="formControlLg">Enter UserName</label>
 			  </div>
 			</br>
 			  <div class="form-outline card-text">
 				<input type="password" id="password" class="form-control form-control-lg" />
 				<label class="form-label" for="typePassword">Enter Password</label>
-			  </div>
+	     	  </div>
 			</br>
-			<div class="form-check">
+			<p style="display:inline-block;color:red;display:none" id="validation">Wrong UserName/Password</p>
+			 <div class="form-check">
 				<input class="form-check-input" type="checkbox" onclick="showPassword1()" value="" id="flexCheckDefault" />
 				<label class="form-check-label" for="flexCheckDefault">Show Password</label>
-			  </div>
+				</div>
 			</br>
-			  <button type="button" class="btn btn-primary">Login</button>
+			  <button type="button" class="btn btn-primary" onclick="validate()">Login</button>
 			</div>
 		  </div>
+		  <div
+  class="modal fade"
+  id="myModal"
+  data-mdb-backdrop="static"
+  data-mdb-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content no-select" style="width:auto;margin-left:100px">
+      <div class="modal-body no-select">
+        <h1 style="display:block;color:rgb(40, 147, 240);margin-left:10px">Loading... </h1>
+        <img src="loading.gif" alt="img not loaded" style="width:100px;height:100px;margin-left:40px;"/>
+      </div>
+    </div>
+  </div>
+</div>
 	<script type="text/javascript" src="js/mdb.min.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
@@ -116,5 +154,9 @@
 		  }
 		});
 	  </script>
+	  <script>
+		var myModalEl = document.getElementById('myModal')
+		 var modal = new mdb.Modal(myModalEl)
+</script>
 </body>
 </html>
