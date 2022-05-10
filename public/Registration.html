@@ -17,7 +17,13 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
     />
 	<link rel="stylesheet" href="css/mdb.min.css" />
-
+<style>
+	.no-select {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+		}
+</style>
 </head>
 
 <body>
@@ -32,7 +38,6 @@
   <a href="Exam.html"><i class="material-icons md-48 md-dark des">note_add</i>Exam</a>
   <a href="Result.html"><i class="material-icons md-48 md-dark des">leaderboard</i>Result</a>
   <a href="Statistics.html"><i class="material-icons md-48 md-dark des">analytics</i>Statistics</a>
-  <a href="Answers.html"><i class="material-icons md-48 md-dark des">fact_check</i>Answers</a>
   <a href="Message.html"><i class="material-icons md-48 md-dark des">chat</i>Message</a>
   <a href="Index.html"><i class="material-icons md-48 md-dark des">logout</i>Logout</a>
 </div>
@@ -109,7 +114,7 @@
 	  aria-labelledby="ex1-tab-1"
 	  style="margin-top:30px;"
 	>
-	<div class="card table-responsive">
+	<div class="card border border-primary table-responsive">
 		<table class="table table-borderless">
 			<thead>
 			  <tr>
@@ -122,7 +127,7 @@
 				<td><p style="font-weight:bolder" >Enter Department:</p></td>
 				
 				<td><div class="form-outline" >
-					<input type="text" id="formControlLg" class="form-control form-control-lg"/>
+					<input type="text" id="Register_department_name" class="form-control form-control-lg"/>
 					<label class="form-label" for="formControlLg">Enter Department Name</label>
 				  </div></td>
 				
@@ -130,40 +135,40 @@
 			  <tr>
 				<td><p style="font-weight:bolder" >Enter the Year:</p></td>
 				<td><div class="form-outline" >
-					<input type="text" id="formControlLg" class="form-control form-control-lg"/>
+					<input type="text" id="Register_year" class="form-control form-control-lg"/>
 					<label class="form-label" for="formControlLg">Enter the Year</label>
 				  </div></td>
 			  </tr>
 			  <tr>
 				<td><p style="font-weight:bolder" >Section Count:</p></td>
 				<td><div class="form-outline" >
-					<input type="number" id="formControlLg" class="form-control form-control-lg"/>
+					<input type="number" id="Register_no_of_sections" class="form-control form-control-lg"/>
 					<label class="form-label" for="formControlLg">No Of Section In Department</label>
 				  </div></td>
 			  </tr>
 			  <tr>
 				<td><p style="font-weight:bolder" >Head of Department:</p></td>
 				<td><div class="form-outline">
-					<input type="text" id="formControlLg" class="form-control form-control-lg"/>
+					<input type="text" id="Register_head_of_department" class="form-control form-control-lg"/>
 					<label class="form-label" for="formControlLg">Head of Department Name</label>
 				  </div></td>
 			</tr>
 			<tr>
 				<td><p style="font-weight:bolder">Email:</p></td>
 				<td> <div class="form-outline">
-					<input type="text" id="formControlLg" class="form-control form-control-lg"/>
+					<input type="text" id="Register_email" class="form-control form-control-lg"/>
 					<label class="form-label" for="formControlLg">Email</label>
 				  </div></td>
 			</tr>
 			</tbody>
 		  </table>
-		<button type="button" class="btn btn-primary" style="width:30%;height:40px;font-size:15px;text-align:center;margin:auto;margin-top:10px;">Register</button>
+		<button type="button" onclick="department()" class="btn btn-primary" style="width:30%;height:40px;font-size:15px;text-align:center;margin:auto;margin-top:10px;">Register</button>
 					</br>
 			
 		</div>
 	  </div>
 	<div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
-		<div class="card table-responsive">
+		<div class="card border border-primary table-responsive">
 			<table class="table table-borderless">
 				<thead>
 				  <tr>
@@ -282,8 +287,8 @@
 		</div>
 	</div>
 	<div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-		<div class="card">
-			<label for="formFileLg" style="margin-left:20px;" class="form-label">Pick the Excel sheet:</label>
+		<div class="card border border-primary">
+			<label for="formFileLg" style="margin-left:20px;margin-top:30px" class="form-label">Pick the Excel sheet:</label>
 			<input class="form-control form-control-lg" id="formFileLg" style="margin-left:20px;width:80%" type="file" />
 		</br>
 			<button type="button" class="btn btn-primary" style="margin:auto;width:30%;height:40px;">Upload</button>
@@ -344,13 +349,13 @@
 </div>
 	</div>
 	<div class="tab-pane fade" id="ex1-tabs-4" role="tabpanel" aria-labelledby="ex1-tab-4">
-		<div class="card1">
-			<h3 style="margin-left:20px;">Drop Department</h3>
+		<div class="card border border-primary">
+			<h3 style="margin-left:20px;margin-top:30px">Drop Department</h3>
 			<table class="table table-borderless">
 				<thead>
 				<tr>
 				<td>
-					<p style="font-weight:bolder" >Department Name:</p>
+					<p >Department Name:</p>
 				</td>
 				<td>
 					<select class="form-select selectstyle" style="box-shadow:none">
@@ -371,13 +376,13 @@
 		  </div>
 		</br>
 
-		  <div class="card1">
-			<h3 style="margin-left:20px;">Drop Year</h3>
+		  <div class="card border border-primary">
+			<h3 style="margin-left:20px;margin-top:30px">Drop Year</h3>
 			<table class="table table-borderless">
 				<thead>
 					<tr>
 						<td>
-							<p style="font-weight:bolder" >Department Name:</p>
+							<p >Department Name:</p>
 						</td>
 						<td>
 							<select class="form-select selectstyle" style="box-shadow:none">
@@ -392,7 +397,7 @@
 					</tr>
 				<tr>
 				<td>
-					<p style="font-weight:bolder" >Enter Drop Year:</p>
+					<p  >Enter Drop Year:</p>
 				</td>
 				<td>
 					<select class="form-select selectstyle">
@@ -413,13 +418,13 @@
 		  </div>
 		</br>
 
-		<div class="card1">
-		  <h3 style="margin-left:20px;">Drop Section</h3>
+		<div class="card border border-primary">
+		  <h3 style="margin-left:20px;margin-top:30px">Drop Section</h3>
 		  <table class="table table-borderless">
 			  <thead>
 				<tr>
 					<td>
-						<p style="font-weight:bolder" >Department Name:</p>
+						<p  >Department Name:</p>
 					</td>
 					<td>
 						<select class="form-select selectstyle" style="box-shadow:none">
@@ -434,7 +439,7 @@
 				</tr>
 			<tr>
 			<td>
-				<p style="font-weight:bolder" >Enter Drop Year:</p>
+				<p style="" >Enter Drop Year:</p>
 			</td>
 			<td>
 				<select class="form-select selectstyle">
@@ -448,7 +453,7 @@
 				</tr>
 			  <tr>
 			  <td>
-				  <p style="font-weight:bolder" >Enter Section:</p>
+				  <p >Enter Section:</p>
 			  </td>
 			  <td>
 				  <select class="form-select selectstyle" style="box-shadow:none">
@@ -468,13 +473,13 @@
 		</div>
 	</br>
 
-	<div class="card1">
-	  <h3 style="margin-left:20px;">Student</h3>
+	<div class="card border border-primary">
+	  <h3 style="margin-left:20px;margin-top:30px">Student</h3>
 	  <table class="table table-borderless">
 		  <thead>
 		  <tr>
 		  <td>
-			  <p style="font-weight:bolder" >Student Registration:</p>
+			  <p >Student Registration:</p>
 		  </td>
 		  <td>
 			<div class="form-outline" >
@@ -492,6 +497,51 @@
 	</div>
   </div>
 
+</div>
+<div
+class="modal"
+id="errormodal"
+data-mdb-keyboard="false"
+tabindex="-1"
+aria-labelledby="staticBackdropLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-dialog-centered no-select" style="width:auto;" >
+  <div class="modal-content no-select" style="width:auto;margin-left:25%">
+	<div class="modal-body no-select">
+	  <img id="myimg" alt="img not loaded" />
+	  <h2 align="center" id="qote"></h2>
+	  <p align="center" id="report"></p>
+	 </div>
+  </div>
+</div>
+</div>
+<div
+class="modal"
+id="myModal"
+data-mdb-backdrop="static"
+data-mdb-keyboard="false"
+tabindex="-1"
+aria-labelledby="staticBackdropLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-dialog-centered no-select" >
+  <div class="modal-content no-select" style="width:auto;">
+	<div class="modal-body no-select">
+		<div class="spinner-border text-primary" role="status" style="float:left;width:3rem;height:3rem">
+	  </div>
+	
+	  <div style="float:right;margin-left:10px;margin-top:10px"> 
+	  <h4 class="text-primary">Loading<div class="spinner-grow spinner-grow-sm" style="height:7px;width:7px" role="status">
+	  </div>
+	  <div class="spinner-grow spinner-grow-sm" style="height:7px;width:7px" role="status">
+	  </div>
+	  <div class="spinner-grow spinner-grow-sm" style="height:7px;width:7px" role="status">
+	  </div></h4>
+	</div>
+	 </div>
+  </div>
+</div>
 </div>
 	<script>
 		
@@ -528,6 +578,19 @@
 			  });
 			}
 			</script>
+			
 	<script type="text/javascript" src="js/mdb.min.js"></script>
+	<script type="text/javascript" src="js/registration.js"></script>
+	<script>
+		var Error = document.getElementById('errormodal')
+		   var Errormodal = new mdb.Modal(Error)
+	</script>
+	<script>
+		var myModalEl = document.getElementById('myModal')
+		  var modal = new mdb.Modal(myModalEl)
+		  success()
+		  load()
+		  
+	</script>
 </body>
 </html>

@@ -42,25 +42,6 @@
     }
 }
 	</script>
-	<script>
-		function validate(){
-			var para=document.getElementById("validation");
-			para.style.display="block";
-		}
-     
-		function sleep(ms) {
-	  return new Promise(resolve => setTimeout(resolve, ms));
-  }		 
-  async function load(){
-  modal.show()
-  await sleep(13000);
-  dispose()
-		}
-		function dispose(){
-		  console.log("hello")
-  modal.hide();
-		}
-	  </script>
 </head>
 
 <body>
@@ -96,26 +77,26 @@
 				</div>
 			</br>
 			<div class="form-outline">
-				<input type="text" id="formControlLg" class="form-control form-control-lg" />
+				<input type="text" id="username" autocomplete="off" class="form-control form-control-lg" />
 				<label class="form-label" for="formControlLg">Enter UserName</label>
 			  </div>
 			</br>
 			  <div class="form-outline card-text">
-				<input type="password" id="password" class="form-control form-control-lg" />
+				<input type="password" id="password" autocomplete="off" class="form-control form-control-lg" />
 				<label class="form-label" for="typePassword">Enter Password</label>
+				<div id="validation" class="form-helper" style="display:none;color:red">Wrong UserName/Password</div>
 	     	  </div>
 			</br>
-			<p style="display:inline-block;color:red;display:none" id="validation">Wrong UserName/Password</p>
-			 <div class="form-check">
+			 <div class="form-check" id="mydivcheck">
 				<input class="form-check-input" type="checkbox" onclick="showPassword1()" value="" id="flexCheckDefault" />
 				<label class="form-check-label" for="flexCheckDefault">Show Password</label>
-				</div>
+			</div>
 			</br>
-			  <button type="button" class="btn btn-primary" onclick="validate()">Login</button>
+			  <button type="button" class="btn btn-primary" onclick="login()">Login</button>
 			</div>
 		  </div>
 		  <div
-  class="modal fade"
+  class="modal"
   id="myModal"
   data-mdb-backdrop="static"
   data-mdb-keyboard="false"
@@ -123,13 +104,22 @@
   aria-labelledby="staticBackdropLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-dialog-centered" >
-    <div class="modal-content no-select" style="width:auto;margin-left:100px">
-      <div class="modal-body no-select">
-        <h1 style="display:block;color:rgb(40, 147, 240);margin-left:10px">Loading... </h1>
-        <img src="loading.gif" alt="img not loaded" style="width:100px;height:100px;margin-left:40px;"/>
-      </div>
-    </div>
+<div class="modal-dialog modal-dialog-centered" >
+	<div class="modal-content no-select" style="width:auto;margin-left:30%">
+	  <div class="modal-body no-select">
+		  <div class="spinner-border text-primary" role="status" style="float:left;width:3rem;height:3rem">
+		</div>
+	  
+		<div style="float:right;margin-left:10px;margin-top:10px"> 
+		<h4 class="text-primary">Loading<div class="spinner-grow spinner-grow-sm" style="height:7px;width:7px" role="status">
+		</div>
+		<div class="spinner-grow spinner-grow-sm" style="height:7px;width:7px" role="status">
+		</div>
+		<div class="spinner-grow spinner-grow-sm" style="height:7px;width:7px" role="status">
+		</div></h4>
+	  </div>
+	   </div>
+	</div>
   </div>
 </div>
 	<script type="text/javascript" src="js/mdb.min.js"></script>
@@ -155,8 +145,9 @@
 		});
 	  </script>
 	  <script>
-		var myModalEl = document.getElementById('myModal')
-		 var modal = new mdb.Modal(myModalEl)
-</script>
+		  var myModalEl = document.getElementById('myModal')
+var modal = new mdb.Modal(myModalEl)
+	  </script>
+<script type="text/javascript" src="js/login.js"></script>
 </body>
 </html>

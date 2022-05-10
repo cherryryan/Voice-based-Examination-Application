@@ -46,8 +46,7 @@ input,label {
   <a href="Exam.html"><i class="material-icons md-48 md-dark des">note_add</i>Exam</a>
   <a href="Result.html"><i class="material-icons md-48 md-dark des">leaderboard</i>Result</a>
   <a href="Statistics.html"><i class="material-icons md-48 md-dark des">analytics</i>Statistics</a>
-  <a href="Answers.html"><i class="material-icons md-48 md-dark des">fact_check</i>Answers</a>
-  <a href="Message.html"><i class="material-icons md-48 md-dark des">chat</i>Message</a>
+ <a href="Message.html"><i class="material-icons md-48 md-dark des">chat</i>Message</a>
   <a href="Index.html"><i class="material-icons md-48 md-dark des">logout</i>Logout</a>
 </div>
 <div id="main">
@@ -67,18 +66,6 @@ input,label {
 		aria-controls="ex3-tabs-1"
 		aria-selected="true"
 		>Schedule Exam</a
-	  >
-	</li>
-	<li class="nav-item" role="presentation">
-	  <a
-		class="nav-link"
-		id="ex3-tab-2"
-		data-mdb-toggle="tab"
-		href="#ex3-tabs-2"
-		role="tab"
-		aria-controls="ex3-tabs-2"
-		aria-selected="false"
-		>Correction</a
 	  >
 	</li>
 	<li class="nav-item" role="presentation">
@@ -117,20 +104,6 @@ input,label {
 		</tbody>
 	  </table>
 	</div>
-	<div
-	  class="tab-pane fade"
-	  id="ex3-tabs-2"
-	  role="tabpanel"
-	  aria-labelledby="ex3-tab-2"
-	>
-	<table class="table" id="cortable">
-	<thead>
-	<td style="width:10%">S.no</td>
-	<td style="width:80%">Exam Name</td>
-	<td style="width:10%">Evaluate</td>
-    </thead>
-</table>
-	</div>
 	<div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
 		<table class="table" id="sheduledtable">
 			<td style="width:10%">S.no</td>
@@ -147,15 +120,15 @@ input,label {
 </div>
 	<script>
 		
-		var val=0;
+		var val1=0;
 		function openNav() {
 		  document.getElementById("mySidebar").style.width = "250px";
 		  document.getElementById("main").style.marginLeft = "250px";
 		}
 		
 		function closeNav() {
-		  val+=1
-		  if(val%2==0){
+		  val1+=1
+		  if(val1%2==0){
 		  document.getElementById("mySidebar").style.width = "0";
 		  document.getElementById("main").style.marginLeft= "0";
 		  }
@@ -167,7 +140,6 @@ input,label {
 		<script>
 		create("paper1");
 		sheduled("paper1")
-		correction("paper1")
 		function create(papername){
 			var tableval=document.getElementById("table1");
 			var row=tableval.insertRow();
@@ -239,19 +211,24 @@ input,label {
   			cell7.innerHTML=`<button type="button" style="margin-top:7px" class="btn btn-danger">Delete</button`
 
 		}
-		function correction(papername){
-			var tableval=document.getElementById("cortable");
-			var row=tableval.insertRow();
-			var cell1=row.insertCell(0);
-			var cell2=row.insertCell(1);
-			var cell3=row.insertCell(2);
-			cell1.innerHTML=tableval.rows.length;
-			cell2.innerHTML=papername;
-			cell3.innerHTML=`<button type="button" style="margin-top:7px" class="btn btn-success">Evaluate</button`
-
-		}
 		
 	</script>
+	<script>
+		var acc = document.getElementsByClassName("accordion");
+		var i;
+		
+		for (i = 0; i < acc.length; i++) {
+		  acc[i].addEventListener("click", function() {
+			this.classList.toggle("active1");
+			var panel = this.nextElementSibling;
+			if (panel.style.maxHeight) {
+			  panel.style.maxHeight = null;
+			} else {
+			  panel.style.maxHeight = panel.scrollHeight + "px";
+			} 
+		  });
+		}
+		</script>
 	<script type="text/javascript" src="js/mdb.min.js"></script>
 </body>
 </html>
