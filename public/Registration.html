@@ -9,6 +9,22 @@
 	<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css">
+	<script  src="/__/firebase/9.8.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script  src="/__/firebase/9.8.0/firebase-auth-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-database-compat.js"></script>
+    <script src="/__/firebase/9.8.0/firebase-firestore-compat.js"></script>
+    <script src="/__/firebase/9.8.0/firebase-functions-compat.js"></script>
+    <script src="/__/firebase/9.8.0/firebase-messaging-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-storage-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-analytics-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-remote-config-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-performance-compat.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 	<link
 	rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
@@ -65,6 +81,7 @@
 	</li>
 	<li class="nav-item" role="presentation">
 	  <a
+		onclick="fetchdata()"
 		class="nav-link"
 		id="ex1-tab-2"
 		data-mdb-toggle="tab"
@@ -134,10 +151,13 @@
 			  </tr>
 			  <tr>
 				<td><p style="font-weight:bolder" >Enter the Year:</p></td>
-				<td><div class="form-outline" >
-					<input type="text" id="Register_year" class="form-control form-control-lg"/>
-					<label class="form-label" for="formControlLg">Enter the Year</label>
-				  </div></td>
+				<td><select id="Register_year" class="form-select selectstyle" style="box-shadow:none;color:grey;font-weight:100;"  oninput='style.color="black"'>
+					<option selected="selected">Year</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+				  </select></td>
 			  </tr>
 			  <tr>
 				<td><p style="font-weight:bolder" >Section Count:</p></td>
@@ -183,7 +203,7 @@
 					</td>
 					<td>
 						<div class="form-outline">
-							<input type="text" id="formControlLg" class="form-control form-control-lg"/>
+							<input type="text" id="Student_name" class="form-control form-control-lg"/>
 							<label class="form-label" for="formControlLg">Enter Name</label>
 						  </div>
 					</td>
@@ -194,7 +214,7 @@
 					</td>
 					<td>
 						<div class="form-outline" >
-							<input type="text" id="formControlLg" class="form-control form-control-lg"/>
+							<input type="text" id="Student_register_no" class="form-control form-control-lg"/>
 							<label class="form-label" for="formControlLg">Registration No:</label>
 						  </div>
 					</td>
@@ -204,40 +224,31 @@
 						<p style="font-weight:bolder" >Department Name:</p>
 					</td>
 					<td>
-						<select class="form-select selectstyle" style="box-shadow:none">
-							<option >Department Name</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
+						<select oninput="ondepartmentselected()" id="Student_department_name" class="form-select selectstyle" style="box-shadow:none;color:grey;font-weight:100;"  oninput='style.color="black"'>
+							<option disabled value="" selected>Department Name</option>
 						  </select>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
-						<p style="font-weight:bolder" >Year:</p>
+						<p style="font-weight:bolder;display:inline;" >Year:</p>
+						<p>(Please Select Department)</p>
 					</td>
 					<td>
-						<select class="form-select selectstyle" style="box-shadow:none">
+						<select oninput="onyearselected()" id="Student_Year" class="form-select selectstyle" style="box-shadow:none;color:grey;font-weight:100;"  oninput='style.color="black"'>
 							<option>Year</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
 						  </select>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
-						<p style="font-weight:bolder" >Section:</p>
+						<p style="font-weight:bolder;display:inline;" >Section:</p>
+						<p>(Please Select Year)</p>
 					</td>
 					<td>
-						<select class="form-select selectstyle" style="box-shadow:none">
+						<select id="Student_Section" class="form-select selectstyle" style="box-shadow:none;color:grey;font-weight:100;"  oninput='style.color="black"'>
 							<option>Section</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
+							
 						  </select>
 					</td>
 				  </tr>
@@ -247,7 +258,7 @@
 					</td>
 					<td>
 						<div class="form-outline" >
-							<input type="text" id="formControlLg" class="form-control form-control-lg"/>
+							<input type="text" id="Student_phno" class="form-control form-control-lg"/>
 							<label class="form-label" for="formControlLg">Phone no</label>
 						  </div>
 					</td>
@@ -259,7 +270,7 @@
 					</td>
 					<td>
 						 <div class="form-outline" >
-							  <input type="text" id="formControlLg" class="form-control form-control-lg"/>
+							  <input type="text" id="Student_email" class="form-control form-control-lg"/>
 							  <label class="form-label" for="formControlLg">Email</label>
 							</div>
 					</td>
@@ -270,11 +281,11 @@
 					</td>
 					<td>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+							<input class="form-check-input" type="radio" name="isblind" id="yes"/>
 							<label class="form-check-label" for="flexRadioDefault1"> Yes </label>
 						</div>
 					   <div class="form-check">
-						   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
+						   <input class="form-check-input" type="radio" name="isblind" id="no" checked/>
 							<label class="form-check-label" for="flexRadioDefault2"> NO </label>
 						</div>
 					</td>
@@ -282,7 +293,7 @@
 				 
 				</tbody>
 			  </table>
-			  <button type="button" class="btn btn-primary" style="width:30%;height:40px;font-size:15px;text-align:center;margin:auto;margin-top:10px;">Register</button>
+			  <button onclick="student()" type="button" class="btn btn-primary" style="width:30%;height:40px;font-size:15px;text-align:center;margin:auto;margin-top:10px;">Register</button>
 			</br>
 		</div>
 	</div>
@@ -501,13 +512,17 @@
 <div
 class="modal"
 id="errormodal"
+data-mdb-backdrop="static"
 data-mdb-keyboard="false"
 tabindex="-1"
 aria-labelledby="staticBackdropLabel"
 aria-hidden="true"
 >
-<div class="modal-dialog modal-dialog-centered no-select" style="width:auto;" >
+<div class="modal-dialog modal-dialog-centered no-select" style="width:auto;">
   <div class="modal-content no-select" style="width:auto;margin-left:25%">
+	<div class="modal-header">
+        <button type="button" onclick="loadpage()" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
 	<div class="modal-body no-select">
 	  <img id="myimg" alt="img not loaded" />
 	  <h2 align="center" id="qote"></h2>
@@ -526,7 +541,7 @@ aria-labelledby="staticBackdropLabel"
 aria-hidden="true"
 >
 <div class="modal-dialog modal-dialog-centered no-select" >
-  <div class="modal-content no-select" style="width:auto;">
+  <div class="modal-content no-select" style="width:auto;margin-left:25%">
 	<div class="modal-body no-select">
 		<div class="spinner-border text-primary" role="status" style="float:left;width:3rem;height:3rem">
 	  </div>
@@ -578,7 +593,6 @@ aria-hidden="true"
 			  });
 			}
 			</script>
-			
 	<script type="text/javascript" src="js/mdb.min.js"></script>
 	<script type="text/javascript" src="js/registration.js"></script>
 	<script>
@@ -588,9 +602,28 @@ aria-hidden="true"
 	<script>
 		var myModalEl = document.getElementById('myModal')
 		  var modal = new mdb.Modal(myModalEl)
-		  success()
-		  load()
 		  
 	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+		  const loadEl = document.querySelector('#load');
+		  try {
+			let app = firebase.app();
+			let features = [
+			  'auth', 
+			  'database', 
+			  'firestore',
+			  'functions',
+			  'messaging', 
+			  'storage', 
+			  'analytics', 
+			  'remoteConfig',
+			  'performance',
+			].filter(feature => typeof app[feature] === 'function');
+		  } catch (e) {
+			console.error(e);
+		  }
+		});
+	  </script>
 </body>
 </html>
