@@ -108,15 +108,53 @@ function compare(a,b){
 
 }
 function student(){
-  var name=document.getElementById("Student_name");
-  var registerno=document.getElementById("Student_register_no");
+  var name=document.getElementById("Student_name").value;
+  var registerno=document.getElementById("Student_register_no").value;
   var department=document.getElementById("Student_department_name");
   var year=document.getElementById("Student_Year");
   var section=document.getElementById("Student_Section");
-  var phno=document.getElementById("Student_phno");
-  var email=document.getElementById("Student_email");
-  var yes=document.getElementsByName("yes");
-  var no=document.getElementsByName("no")
+  var phno=document.getElementById("Student_phno").value;
+  var email=document.getElementById("Student_email").value;
+  var blind=document.getElementsByName("isblind")
+  if(name.length>0 && registerno.length>0 && department.value.localeCompare("Department_Name")!=0 && year.value.localeCompare("Year")!=0 && section.value.localeCompare("Section")!=0 && phno.length>0 && email.length>0){
+        var database=firebase.database();
+        loader();
+        database.ref().child("students").child(registerno).get().then((snapshot)=>{
+          if(snapshot.exists()){
+            disposer()
+            error("already student exists");
+            load()
+          }
+          else{
+             database.ref().child("students").child(registerno).set({
+               "name":name,
+               "registerno":registerno,
+               "department":department.value.toString(),
+               "year":year.value.toString(),
+               "section":section.value.toString(),
+               "phno":phno,
+               "email":email,
+               "blind":blind[0].checked
+             },(error)=>{
+              if(error){
+                console.log(error)
+                error("Failed to write in database")
+                load();
+                disposer();
+              }
+              else{ 
+                  success();
+                  load();
+                  disposer();
+              } 
+             })
+          }
+        })
+  }
+  else{
+    error("fill all the fields")
+    load();
+  }
 
 
 }
