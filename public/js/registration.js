@@ -126,7 +126,7 @@ function student(){
             load()
           }
           else{
-             database.ref().child("students").child(registerno).set({
+             database.ref().child("students").child(registerno.toUpperCase()).set({
                "name":name,
                "registerno":registerno,
                "department":department.value.toString(),
@@ -157,6 +157,114 @@ function student(){
   }
 
 
+}
+var upload=document.getElementById("Student_upload");
+upload.addEventListener("click",()=>{
+    upload.value=""; 
+})
+var excelvalues;
+upload.addEventListener("change",()=>{
+readXlsxFile(upload.files[0]).then((data1)=>{
+console.log(data1);
+  excelvalues=data1;
+    })
+})
+function checkexists(departmentname,year,section){
+      var n1=data.length;
+      var i;
+      for(i=0;i<n1;i++){
+          if(data[i].year==year && data[i].sections==section && data[i].department==departmentname)
+          return true;
+      }
+      return false;
+}
+function verifyxml2(){
+     var n=excelvalues.length;
+     var i,j;
+     if(verifyxml(excelvalues)==true){
+     for(i=1;i<n;i++){
+        if(checkexists(excelvalues[i][2],excelvalues[i][3],excelvalues[i][4])==true)
+        continue;
+        else
+        break;
+     }
+     
+     if(i!=n){
+       error("data contain invalid department/year/section")
+       load();
+       return false;
+     }
+     return true;
+    }
+    else{
+      error("fill all the fields");
+      load();
+      return false;
+    }
+}
+function verifyxml(data){
+      flag=true;
+      data.forEach((subdata)=>{
+        subdata.forEach((subdata2)=>{
+          if(subdata2==null) 
+          flag=false;
+        })
+      })
+      return flag
+}
+var excelflag=false;
+var values="";
+async function userexists(){
+    excelflag=false;
+    var database=firebase.database();
+    var n=excelvalues.length;
+    var i=0;
+    for(i=1;i<n;i++){
+    console.log(excelvalues[i][1]+"hello")
+   await database.ref().child("students").child(excelvalues[i][1].toUpperCase()).get().then((snapshot)=>{
+      console.log(snapshot.val())
+      if(snapshot.val()!=null){
+      excelflag=true;
+      values+=excelvalues[i][1]+","
+      }
+      if(excelflag==false && i==n-1){
+        console.log("file")
+      }
+    })
+  }
+ 
+}
+async function uploadstudentdetails(){
+  if(verifyxml2()==true){
+  loader()
+   await userexists();
+   disposer()
+    if(excelflag==true){
+      error("user already exists"+values);
+      load()
+    }
+    else{
+      var n=excelvalues.length;
+      var i=0;
+      var database=firebase.database();
+      loader();
+      for(i=1;i<n;i++){
+        await database.ref().child("students").child(excelvalues[i][1].toUpperCase()).set({
+          "name":excelvalues[i][0],
+          "registerno":excelvalues[i][1],
+          "department":excelvalues[i][2],
+          "year":excelvalues[i][3],
+          "section":excelvalues[i][4],
+          "phno":excelvalues[i][5],
+          "email":excelvalues[i][6],
+          "blind":excelvalues[i][7]
+        })
+      }
+      disposer()
+      success();
+      load();
+    }
+  }
 }
 function department(){
 	var departmentname=document.getElementById("Register_department_name").value;
@@ -256,3 +364,99 @@ function success(){
 	function disposer(){
 		modal.hide();
 	}
+  var data2;
+function dropfetchdata(){
+      data2=new Array();
+      loader();
+      var database=firebase.database();
+      database.ref().child("department").get().then((snapshot)=>{
+        if(snapshot.exists()){
+            snapshot.forEach((childsnapshot)=>{
+              let c={"year":childsnapshot.child("year").val(),"department":childsnapshot.child("departmentname").val(),"sections":childsnapshot.child("sections").val()}
+              data2.push(c)
+            })
+            data2.sort(compare)
+            console.log(data2)
+            adddropdepartment();
+            disposer()
+        }
+        else{
+          disposer()
+          error("data not there");
+          load();
+        }
+      })
+
+}
+  function adddropdepartment(){
+    dropcleardepartment();
+     var n=data2.length;
+     var i;
+     var department=document.getElementById("Drop_department_name");
+     var d=new Array();
+     for(i=0;i<n;i++){
+        d.push(data2[i].department);
+     }
+     var uniq=[...new Set(d)]
+     n=uniq.length;
+     for(i=0;i<n;i++){
+        department.add(new Option(uniq[i],uniq[i]))
+     }
+  }
+  function ondropdepartmentselected(){
+         dropclearyear()
+         var selectobject=document.getElementById("Drop_Year");
+         var n=data2.length;
+         var value=document.getElementById("Drop_department_name").value;
+         for(i=0;i<n;i++){
+           if(data2[i].department.localeCompare(value)==0){
+              selectobject.add(new Option(data2[i].year,data2[i].year))
+           }
+         }
+  }
+  function dropclearyear(){
+    var selectobject = document.getElementById("Drop_Year");
+    var length=selectobject.length;
+    if(selectobject.length>1)
+    for (var i=1; i<=length; i++) {
+         selectobject.remove(1)
+    }
+    selectobject.selectedIndex=0;
+  }
+  function dropcleardepartment(){
+    var selectobject = document.getElementById("Drop_department_name");
+    var length=selectobject.length;
+    if(selectobject.length>1)
+    for (var i=1; i<=length; i++) {
+         selectobject.remove(1)
+    }
+    selectobject.selectedIndex=0;
+  }
+  async function dropdata(){
+    var value=document.getElementById("Drop_Year").value
+    var value2=document.getElementById("Drop_department_name").value;
+    var registerno=document.getElementById("Drop_registration_number").value;
+    var database=firebase.database();
+    if(value.localeCompare("Year")!=0 && value2.localeCompare("Department_name")!=0){
+        database.ref().child("department").child(value2+value).set(null);
+    }
+    else if(value2.localeCompare("Department_name")!=0){
+        var n=data2.length;
+        var i=0;
+        for(i=0;i<n;i++){
+          if(data2[i].department.localeCompare(value2)==0){
+            await database.ref().child('department').child(data2[i].department+data2[i].year).set(null);
+          }
+        }
+    }
+    else if(registerno.length>0){
+        database.ref().child('students').child(registerno.toUpperCase()).set(null);
+    }
+    else{
+        error("read the Note Points");
+        load();
+        return ;
+    }
+    success();
+    load();
+  }

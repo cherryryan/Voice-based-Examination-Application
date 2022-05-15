@@ -25,6 +25,7 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+	<script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
 	<link
 	rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
@@ -95,7 +96,9 @@
 	</li>
 	<li class="nav-item" role="presentation">
 	  <a
+		onclick="fetchdata()"
 		class="nav-link"
+		download="basicstructure.xlsx"
 		id="ex1-tab-3"
 		data-mdb-toggle="tab"
 		href="#ex1-tabs-3"
@@ -108,6 +111,7 @@
 	</li>
 	<li class="nav-item" role="presentation">
 		<a
+		  onclick="dropfetchdata()"
 		  class="nav-link"
 		  id="ex1-tab-4"
 		  data-mdb-toggle="tab"
@@ -300,9 +304,11 @@
 	<div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
 		<div class="card border border-primary">
 			<label for="formFileLg" style="margin-left:20px;margin-top:30px" class="form-label">Pick the Excel sheet:</label>
-			<input class="form-control form-control-lg" id="formFileLg" style="margin-left:20px;width:80%" type="file" />
+			<input class="form-control form-control-lg" id="Student_upload" style="margin-left:20px;width:80%" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
 		</br>
-			<button type="button" class="btn btn-primary" style="margin:auto;width:30%;height:40px;">Upload</button>
+			<button type="button" onclick="uploadstudentdetails()" class="btn btn-primary" style="margin:auto;width:30%;height:40px;">Upload</button>
+	</br>
+			<button class="btn btn-primary"  style="margin:auto;width:30%;height:40px;" onclick="loader();window.location.href='basicstructure.xlsx';disposer()">Basic File</button>
 	</br>
 			<a
 			data-mdb-toggle="collapse"
@@ -361,89 +367,15 @@
 	</div>
 	<div class="tab-pane fade" id="ex1-tabs-4" role="tabpanel" aria-labelledby="ex1-tab-4">
 		<div class="card border border-primary">
-			<h3 style="margin-left:20px;margin-top:30px">Drop Department</h3>
-			<table class="table table-borderless">
-				<thead>
-				<tr>
-				<td>
-					<p >Department Name:</p>
-				</td>
-				<td>
-					<select class="form-select selectstyle" style="box-shadow:none">
-						<option>Department Name</option>
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-					  </select>
-					
-				</td>
-			</tr>
-				</thead>
-			</table>
-			<button type="button" class="btn btn-primary" style="width:30%;height:40px;margin-left:200px">Drop</button>
-		</br>
-		</br>
-		  </div>
-		</br>
-
-		  <div class="card border border-primary">
-			<h3 style="margin-left:20px;margin-top:30px">Drop Year</h3>
-			<table class="table table-borderless">
-				<thead>
-					<tr>
-						<td>
-							<p >Department Name:</p>
-						</td>
-						<td>
-							<select class="form-select selectstyle" style="box-shadow:none">
-								<option>Department Name</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-							  </select>
-							
-						</td>
-					</tr>
-				<tr>
-				<td>
-					<p  >Enter Drop Year:</p>
-				</td>
-				<td>
-					<select class="form-select selectstyle">
-						<option>Department Name</option>
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-					  </select>
-					</td>
-					</tr>
-				
-				</thead>
-			</table>
-			<button type="button" class="btn btn-primary" style="width:30%;height:40px;margin-left:200px">Drop</button>
-		</br>
-		</br>
-		  </div>
-		</br>
-
-		<div class="card border border-primary">
-		  <h3 style="margin-left:20px;margin-top:30px">Drop Section</h3>
-		  <table class="table table-borderless">
+		 <table class="table table-borderless">
 			  <thead>
 				<tr>
 					<td>
 						<p  >Department Name:</p>
 					</td>
 					<td>
-						<select class="form-select selectstyle" style="box-shadow:none">
-							<option>Department Name</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
+						<select oninput="ondropdepartmentselected()" id="Drop_department_name" class="form-select selectstyle" style="box-shadow:none;color:grey;font-weight:100;"  oninput='style.color="black"'>
+							<option value="Department_name">Department Name</option>
 						  </select>
 						
 					</td>
@@ -453,58 +385,34 @@
 				<p style="" >Enter Drop Year:</p>
 			</td>
 			<td>
-				<select class="form-select selectstyle">
-					<option>Department Name</option>
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
+				<select id="Drop_Year" class="form-select selectstyle" style="box-shadow:none;color:grey;font-weight:100;"  oninput='style.color="black"'>
+					<option value="Year">Year</option>
 				  </select>
 				</td>
 				</tr>
-			  <tr>
-			  <td>
-				  <p >Enter Section:</p>
-			  </td>
-			  <td>
-				  <select class="form-select selectstyle" style="box-shadow:none">
-					  <option>Department Name</option>
-					  <option>1</option>
-					  <option>2</option>
-					  <option>3</option>
-					  <option>4</option>
-					</select>
-				  </tr>
-			  </td>
+			<tr>
+				<td>
+					<p >Registration Number:</p>
+				</td>
+				<td>
+				  <div class="form-outline" >
+					  <input type="text" id="Drop_registration_number" class="form-control form-control-lg"/>
+					  <label class="form-label" for="Drop_register_number">Registration No:</label>
+					</div>
+					</tr>
 			  </thead>
 		  </table>
-		  <button type="button" class="btn btn-primary" style="width:30%;height:40px;margin-left:200px">Drop</button>
-	  </br>
+		  <button type="button" onclick="dropdata()" class="btn btn-primary" style="width:30%;height:40px;margin-left:200px">Drop</button>
+		</br>
+		<p style="color:red;display:inline;margin-left:10px"> *Note:To drop Specific Department just Select Department and click Drop</p>
+		<p style="color:red;display:inline;margin-left:10px"> *Note:To drop Specific Year Select Department and Year</p>
+		<p style="color:red;display:inline;margin-left:10px"> *Note:To drop Specific Section Select Department and Year and Section</p>
+		<p style="color:red;display:inline;margin-left:10px"> *Note:To drop Student Just type register No</p>
+		<p style="color:red;display:inline;margin-left:10px"> Don't Select or add value for other do any of above</p>
+	 
+		</br>
 	  </br>
 		</div>
-	</br>
-
-	<div class="card border border-primary">
-	  <h3 style="margin-left:20px;margin-top:30px">Student</h3>
-	  <table class="table table-borderless">
-		  <thead>
-		  <tr>
-		  <td>
-			  <p >Student Registration:</p>
-		  </td>
-		  <td>
-			<div class="form-outline" >
-				<input type="text" id="formControlLg" class="form-control form-control-lg"/>
-				<label class="form-label" for="formControlLg">Registration No:</label>
-			  </div>
-			  </tr>
-		  </td>
-		  </thead>
-	  </table>
-	  <button type="button" class="btn btn-primary" style="width:30%;height:40px;margin-left:200px">Drop</button>
-  </br>
-  </br>
-	</div>
 	</div>
   </div>
 
