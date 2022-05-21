@@ -10,6 +10,23 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css">
 	<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+	<script  src="/__/firebase/9.8.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script  src="/__/firebase/9.8.0/firebase-auth-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-database-compat.js"></script>
+    <script src="/__/firebase/9.8.0/firebase-firestore-compat.js"></script>
+    <script src="/__/firebase/9.8.0/firebase-functions-compat.js"></script>
+    <script src="/__/firebase/9.8.0/firebase-messaging-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-storage-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-analytics-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-remote-config-compat.js"></script>
+    <script  src="/__/firebase/9.8.0/firebase-performance-compat.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+	<script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
 	<link
 	rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
@@ -17,6 +34,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
     />
+	<script type="text/javascript" src="js/makepaper.js"></script>
 	<link rel="stylesheet" href="css/mdb.min.css" />
 	<style>
 		.textareaclass{
@@ -67,16 +85,17 @@
 		var questions=new Array();
 		var currentrow="";
 		var modal;
-		function addquestion(type,question,options){
+		function addquestion(type,question,options,answer){
 			    var val=parseInt(currentrow.charAt(currentrow.length-1))
 				if(val<=questions.length)
 				{
 					questions[val-1].questiontype=type;
 					questions[val-1].question=question;
 					questions[val-1].options=options;
+					questions[val-1].answer=answer;
 				}
 				else
-				questions.push({questiontype:type,question:question,options:options})
+				questions.push({questiontype:type,question:question,options:options,answer:answer})
 				console.log(JSON.stringify(questions))
 		}
 		function setRow(text){
@@ -87,6 +106,7 @@
 				var table=document.getElementById("myquestiontable");
 				var count=table.rows.length;
 				var i;
+				var answer=document.getElementById("answerinmodal").value;
 				console.log("thse cout is"+count);
 				for(i=1;i<count;i++){
 						if(table.rows[i].id.toString()==currentrow)
@@ -95,15 +115,23 @@
 				var textbefore=document.getElementById("textbefore").value;
 				var textafter=document.getElementById("textafter").value;
 				var x=document.getElementById("myquestiontable").rows[i].cells;
+				if(textbefore.length>0 && textafter.length>0 && answer.length>0){
 				x[1].innerHTML=textbefore+" __________ "+textafter;
+				x[2].innerHTML=answer
 				modal.hide();
-				addquestion("Blank",textbefore+" __________ "+textafter,"");
+				addquestion("Blank",textbefore+" __________ "+textafter,"",answer);
+				}
+				else{ 
+					error("fill all the fields");
+					load();
+				}
 
 		}
 		function setSinglechoice(){
 			var table=document.getElementById("myquestiontable");
 				var count=table.rows.length;
 				var i;
+				var answer=document.getElementById("answerinmodal").value;
 				for(i=1;i<count;i++){
 						if(table.rows[i].id.toString()==currentrow)
 						break;
@@ -115,7 +143,14 @@
 				console.log("Number of rows"+count2)
 				for(j=1;j<count2;j++){
 					console.log("optionrow"+j);
-						myarray.push(document.getElementById("optionrow"+j).value)
+					   var option=document.getElementById("optionrow"+j).value
+					    if(option.length>0)
+						myarray.push(option)
+						else{
+							error("fill all the fields");
+							load();
+							return ;
+						}
 				}
 				var displaystring=""
 				displaystring+=document.getElementById("singlechoice").value+"</br>"
@@ -123,14 +158,22 @@
 				  displaystring+=j+") "+"<input type='radio' name='options1'>"+" "+myarray[j-1]+"</br>"
 				}
 				var x=document.getElementById("myquestiontable").rows[i].cells;
+				if(document.getElementById("singlechoice").value.length>0 && answer.length>0){
 				x[1].innerHTML=displaystring;
+				x[2].innerHTML=answer;
 				modal.hide();
-				addquestion("singlechoice",document.getElementById("singlechoice").value,myarray);
+				addquestion("singlechoice",document.getElementById("singlechoice").value,myarray,answer);
+				}
+				else{
+					error("fill all the fields");
+					load();
+				}
 		}
 		function setMultiplechoice(){
 			var table=document.getElementById("myquestiontable");
 				var count=table.rows.length;
 				var i;
+				var answer=document.getElementById("answerinmodal").value;
 				for(i=1;i<count;i++){
 						if(table.rows[i].id.toString()==currentrow)
 						break;
@@ -142,7 +185,14 @@
 				console.log("Number of rows"+count2)
 				for(j=1;j<count2;j++){
 					console.log("optionrow"+j);
-						myarray.push(document.getElementById("optionrow"+j).value)
+					var option=document.getElementById("optionrow"+j).value
+						if(option.length>0)
+						myarray.push(option)
+						else{
+							error("fill all the fields");
+							load();
+							return ;
+						}
 				}
 				var displaystring=""
 				displaystring+=document.getElementById("multichoice").value+"</br>"
@@ -150,9 +200,16 @@
 				  displaystring+=j+") "+"<input type='checkbox' name='options1'>"+" "+myarray[j-1]+"</br>"
 				}
 				var x=document.getElementById("myquestiontable").rows[i].cells;
+				if(document.getElementById("multichoice").value.length>0 && answer.length>0){
 				x[1].innerHTML=displaystring;
+				x[2].innerHTML=answer;
 				modal.hide();
-				addquestion("multichoice",document.getElementById("multichoice").value,myarray);
+				addquestion("multichoice",document.getElementById("multichoice").value,myarray,answer);
+				}
+				else{
+					error("fill all the fields");
+					load();
+				}
 		}
 		function savechange(){
 			var option=document.getElementById("myoption").value;
@@ -225,19 +282,31 @@
 		}
 		function question(){
 			cleartablerows();
+			answerinmodal.value=""
 			var option=document.getElementById("myoption").value;
-			if(option=="Blank")
+			if(option=="Blank"){
+				answerinmodal.style.display="block"
 			blank();
-			if(option=="Single Choice")
+			}
+			else if(option=="Single Choice"){
+				answerinmodal.style.display="block"
 			singlechoice();
-			if(option=="Multiple Choice")
+			}
+			else if(option=="Multiple Choice"){
+				answerinmodal.style.display="block"
 			multichoice();
+			}
+			else{ 
+				cleartablerows();
+				answerinmodal.style.display="none"
+			}
 
 		}
 		function display(){
 			const myModalEl = document.getElementById('exampleModal')
              modal = new mdb.Modal(myModalEl)
-            modal.show()
+			
+             modal.show()
 		}
 		function changeindex(){
 				var table=document.getElementById("myquestiontable");
@@ -260,6 +329,7 @@
 				changeindex();
 		}
 		function create(rowvalue){
+			answerinmodal.style.display="none";
 			document.getElementById("myoption").selectedIndex =0;
 			 cleartablerows();
 			var table = document.getElementById("myquestiontable");
@@ -281,16 +351,16 @@
   			var cell2 = row.insertCell(1);
 			var cell31=row.insertCell(2)
 			var cell3=row.insertCell(3);
-			cell31.innerHTML=`<td><input type="text" id="answer" class="form-control" placeholder="answer" /></td>`
+			cell31.innerHTML=`Edit to change the Content`
   			cell2.innerHTML ="Edit to change the Content";
 			cell3.innerHTML = "<td>"+
-			'<div onclick="setRow(\'row'+count.toString()+'\');display()">'+
+			'<div class="no-select" onclick="setRow(\'row'+count.toString()+'\');display()">'+
 				"<p class='astyle'><i class='material-icons md-48 md-dark istyle'>edit</i>Edit</p>"+
 			"</div>"+
-			'<div onclick="deleterowbytag(\'row'+count.toString()+'\')">'+
+			'<div  class="no-select" onclick="deleterowbytag(\'row'+count.toString()+'\')">'+
 			"<p class='astyle'><i class='material-icons md-48 md-dark istyle'>delete_outline</i>Delete</p>"+
 			"</div>"+
-			'<div onclick="create(\'row'+count.toString()+'\')">'+
+			'<div class="no-select" onclick="create(\'row'+count.toString()+'\')">'+
 			'<p class="astyle" ><i class="material-icons md-48 md-dark istyle">add</i>Add</p>'+
 			"</div>"+
 		"</td>";
@@ -300,7 +370,7 @@
 
 </head>
 
-<body>
+<body class="no-select">
 	<div id="mySidebar" class="sidebar">
 		<img src="photos/logo.jpg" class="circular--square"/>
   <a href="Registration.html"><i class="material-icons md-48 md-dark des">account_box</i>Registration</a>
@@ -322,12 +392,16 @@
   <div class="bar2"></div>
   <div class="bar3"></div>
 </div>
+<div class="form-outline">
+	<input type="text" id="Question_Paper_Name" class="form-control form-control-lg" />
+	<label class="form-label" for="formControlLg">Question Paper Name</label>
+</div>
 <div class="table-responsive">
 <table class="table table-borderless" id="myquestiontable">
 	<thead>
 	  <tr>
 		<th scope="col" style="width:10%;">Q.no</th>
-		<th scope="col" style="width:8=60%;">Question</th>
+		<th scope="col" style="width:60%;">Question</th>
 		<th style="width:20%">Answers</th>
 		<th scope="col" style="width:10%;"></th>
 	  </tr>
@@ -336,21 +410,22 @@
 	  <tr id="row1">
 		<td>1</td>
 		<td>Edit to change the Content</td>
-		<td><input type="text" id="answer" class="form-control" placeholder="answer" /></td>
+		<td>Edit to change the Content</td>
 		<td>
-			<div onclick="setRow('row1');display()">
+			<div class="no-select" onclick="setRow('row1');display()">
 				<p class="astyle"><i class="material-icons md-48 md-dark istyle">edit</i>Edit</p>
 			</div>
-			<div onclick="deleterowbytag('row1')">
+			<div class="no-select" onclick="deleterowbytag('row1')">
 			<p class="astyle"><i class="material-icons md-48 md-dark istyle">delete_outline</i>Delete</p>
 			</div>
-			<div  onclick="create('row1')">
+			<div class="no-select" onclick="create('row1')">
 				<p class="astyle"><i class="material-icons md-48 md-dark istyle">add</i>Add</p>
 			</div>
 		</td>
 	  </tr>
 	</tbody>
   </table>
+  <button type="button" onclick="addpaper()" style="display:block;margin:0 auto;" class="btn btn-success">Add Paper</button>
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-fullscreen">
 	  <div class="modal-content">
@@ -368,6 +443,7 @@
 			  <table class="table" id="question_table">
 
 			  </table>
+			  <input type="text" style="display:none;" class="form-control" placeholder="Answer" id="answerinmodal"/>
 
 		</div>
 		<div class="modal-footer">
@@ -378,10 +454,60 @@
 	</div>
   </div>
 </div>
+<div
+class="modal"
+id="errormodal"
+data-mdb-backdrop="static"
+data-mdb-keyboard="false"
+tabindex="-1"
+aria-labelledby="staticBackdropLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-dialog-centered no-select" style="width:auto">
+  <div class="modal-content no-select" style="width:auto;margin-left:25%;;border:1px solid blue;">
+	<div class="modal-header">
+        <button type="button" onclick="loadpage()" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+	<div class="modal-body no-select">
+	  <img id="myimg" alt="img not loaded" />
+	  <h2 align="center" id="qote"></h2>
+	  <p align="center" id="report"></p>
+	 </div>
+  </div>
 </div>
-			
+</div>
+<div
+class="modal"
+id="myModal"
+data-mdb-backdrop="static"
+data-mdb-keyboard="false"
+tabindex="-1"
+aria-labelledby="staticBackdropLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-dialog-centered no-select" >
+  <div class="modal-content no-select" style="width:auto;margin-left:25%">
+	<div class="modal-body no-select">
+		<div class="spinner-border text-primary" role="status" style="float:left;width:3rem;height:3rem">
+	  </div>
+	
+	  <div style="float:right;margin-left:10px;margin-top:10px"> 
+	  <h4 class="text-primary">Loading<div class="spinner-grow spinner-grow-sm" style="height:7px;width:7px" role="status">
+	  </div>
+	  <div class="spinner-grow spinner-grow-sm" style="height:7px;width:7px" role="status">
+	  </div>
+	  <div class="spinner-grow spinner-grow-sm" style="height:7px;width:7px" role="status">
+	  </div></h4>
+	</div>
+	 </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript" src="js/mdb.min.js"></script>
 	<script>
-		
+		var answerinmodal=document.getElementById("answerinmodal")
+		answerinmodal.style.display="none";
 		var val=0;
 		function openNav() {
 		  document.getElementById("mySidebar").style.width = "250px";
@@ -400,6 +526,27 @@
 		}
 		</script>
 		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+			  const loadEl = document.querySelector('#load');
+			  try {
+				let app = firebase.app();
+				let features = [
+				  'auth', 
+				  'database', 
+				  'firestore',
+				  'functions',
+				  'messaging', 
+				  'storage', 
+				  'analytics', 
+				  'remoteConfig',
+				  'performance',
+				].filter(feature => typeof app[feature] === 'function');
+			  } catch (e) {
+				console.error(e);
+			  }
+			});
+		  </script>
+		<script>
 			var acc = document.getElementsByClassName("accordion");
 			var i;
 			
@@ -415,6 +562,14 @@
 			  });
 			}
 			</script>
-	<script type="text/javascript" src="js/mdb.min.js"></script>
+			<script>
+				var Error = document.getElementById('errormodal')
+				   var Errormodal = new mdb.Modal(Error)
+			</script>
+			<script>
+				var myModalEl = document.getElementById('myModal')
+				  var modal = new mdb.Modal(myModalEl)
+				  
+			</script>
 </body>
 </html>
