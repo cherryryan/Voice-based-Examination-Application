@@ -40,7 +40,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
   <a href="Exam.html"><i class="material-icons md-48 md-dark des">note_add</i>Exam</a>
   <a href="Result.html"><i class="material-icons md-48 md-dark des">leaderboard</i>Result</a>
   <a href="Statistics.html"><i class="material-icons md-48 md-dark des">analytics</i>Statistics</a>
-  <a href="Message.html"><i class="material-icons md-48 md-dark des">chat</i>Message</a>
   <a href="Index.html"><i class="material-icons md-48 md-dark des">logout</i>Logout</a>
 </div>
 
@@ -57,30 +56,44 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 	<option>paper4</option>
   </select>
 </br>
-</br>
-<div class="middle">
-<h3>Marks ranges</h3>
-<canvas class="middle" id="myChart" style="width:100%;max-width:600px"></canvas>
-</div>
-</br>
-</br>
-<div class="middle">
-<h3>Participation</h3>
-<canvas class="middle" id="myChart1" style="width:100%;max-width:600px"></canvas>
-</div>
-</br>
-</br>
-<div class="middle">
-	<h3>Pass Percentage</h3>
-	<canvas class="middle" id="myChart2" style="width:100%;max-width:600px"></canvas>
-</div>
-</div>
-</br>
-</br>
-<div class="middle">
-	<h3>People DepartmentWise</h3>
-	<canvas class="middle" id="myChart3" style="width:100%;max-width:600px"></canvas>
-</div>
+<table class="table table-borderless">
+  <thead>
+    <tr>
+      <td style="width:50%"></td>
+      <td style="width:50%"></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div>
+          <h3>Marks ranges</h3>
+          <canvas class="middle" id="myChart" style="width:100%;max-width:600px"></canvas>
+          </div>
+      </td>
+      <td>
+        <div>
+          <h3>Participation</h3>
+          <canvas class="middle" id="myChart1" style="width:100%;max-width:600px"></canvas>
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div>
+          <h3>Pass Percentage</h3>
+          <canvas class="middle" id="myChart2" style="width:100%;max-width:600px"></canvas>
+        </div>
+      </td>
+      <td>
+        <div>
+          <h3>People DepartmentWise</h3>
+          <canvas class="middle" id="myChart3" style="width:100%;max-width:600px"></canvas>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 </div>
 	<script>
 var xValues = [50,60,70,80,90,100,110,120,130,140,150];

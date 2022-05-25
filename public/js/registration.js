@@ -119,7 +119,7 @@ function student(){
   if(name.length>0 && registerno.length>0 && department.value.localeCompare("Department_Name")!=0 && year.value.localeCompare("Year")!=0 && section.value.localeCompare("Section")!=0 && phno.length>0 && email.length>0){
         var database=firebase.database();
         loader();
-        database.ref().child("students").child(registerno).get().then((snapshot)=>{
+        database.ref().child("students").child(registerno.toUpperCase()).get().then((snapshot)=>{
           if(snapshot.exists()){
             disposer()
             error("already student exists");
@@ -173,7 +173,7 @@ function checkexists(departmentname,year,section){
       var n1=data.length;
       var i;
       for(i=0;i<n1;i++){
-          if(data[i].year==year && data[i].sections==section && data[i].department==departmentname)
+          if(data[i].year==year && data[i].sections>=section && section>=1 && data[i].department==departmentname)
           return true;
       }
       return false;

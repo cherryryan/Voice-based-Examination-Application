@@ -86,15 +86,15 @@
 		var currentrow="";
 		var modal;
 		function addquestion(type,question,options,answer){
-			    var val=parseInt(currentrow.charAt(currentrow.length-1))
-				if(val<=questions.length)
-				{
-					questions[val-1].questiontype=type;
-					questions[val-1].question=question;
-					questions[val-1].options=options;
-					questions[val-1].answer=answer;
+			    var val=parseInt(currentrow.charAt(currentrow.length-1))-1
+			    if(val<questions.length){
+					questions[val].questiontype=type;
+					questions[val].question=question;
+					questions[val].options=options;
+					questions[val].answer=answer;
+					console.log(JSON.stringify(questions))
+					return ;
 				}
-				else
 				questions.push({questiontype:type,question:question,options:options,answer:answer})
 				console.log(JSON.stringify(questions))
 		}
@@ -213,12 +213,17 @@
 		}
 		function savechange(){
 			var option=document.getElementById("myoption").value;
+		
 			if(option=="Blank")
 			setBlank();
 			if(option=="Single Choice")
 			setSinglechoice();
 			if(option=="Multiple Choice")
 			setMultiplechoice();
+			cleartablerows();
+			document.getElementById("answerinmodal").value="";
+			document.getElementById("answerinmodal").style.display="none";
+			document.getElementById("myoption").selectedIndex=0;
 		}
 		function cleartablerows(){
 			var mytable=document.getElementById("question_table")
@@ -336,15 +341,8 @@
 			var count=document.getElementById("myquestiontable").rows.length;
 			var i=0;
 			var flag=true;
-			for(i=1;i<count;i++){
-				if(table.rows[i].id.toString()==rowvalue.toString()){
-					flag=false;
-					break;
-				}
-			}
-			console.log(i)
-			if(flag==true)
 			i=count-1;
+			
   			var row = table.insertRow(i+1);
 			row.id="row"+count.toString()
   			var cell1 = row.insertCell(0);
@@ -382,7 +380,6 @@
   <a href="Exam.html"><i class="material-icons md-48 md-dark des">note_add</i>Exam</a>
   <a href="Result.html"><i class="material-icons md-48 md-dark des">leaderboard</i>Result</a>
   <a href="Statistics.html"><i class="material-icons md-48 md-dark des">analytics</i>Statistics</a>
-  <a href="Message.html"><i class="material-icons md-48 md-dark des">chat</i>Message</a>
   <a href="Index.html"><i class="material-icons md-48 md-dark des">logout</i>Logout</a>
 </div>
 
