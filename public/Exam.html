@@ -16,6 +16,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
     />
+	<script src="js/Exam.js"></script>
 	<link rel="stylesheet" href="css/mdb.min.css" />
 	<style>
 		label {
@@ -137,9 +138,9 @@ input,label {
 		}
 		</script>
 		<script>
-		create("paper1");
-		sheduled("paper1")
-		function create(papername){
+		create()
+		sheduled("paper1","23 july 2001 10:30",3,"Cse","1")
+		function create(){
 			var tableval=document.getElementById("table1");
 			var row=tableval.insertRow();
 			var cell1=row.insertCell(0);
@@ -150,23 +151,26 @@ input,label {
 			var cell6=row.insertCell(5);
 			var cell7=row.insertCell(6);
 			cell1.innerHTML = tableval.rows.length-1;
-			cell2.innerHTML=papername;
+			cell2.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" onchange="question()">
+				<option>Select Paper</option>
+				
+  </select>`
 			cell3.innerHTML=`
-<input type="datetime-local" id="meeting-time"
+<input style="height:40px" type="datetime-local" id="meeting-time"
        name="meeting-time">`
-			cell4.innerHTML=`<div style="margin:0px" class="form-outline">
-  <input type="number" id="typeNumber" class="form-control" />
-  <label class="form-label" for="typeNumber">Time in Hrs</label>
+			cell4.innerHTML=`<div style="margin:0px" class="form-outline form-outline-lg">
+  <input type="number" id="typeNumber" class="form-control form-control-lg" />
+  <label class="form-label form-label-lg" for="typeNumber">Time in Hrs</label>
 </div>`
             cell5.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" onchange="question()">
-				<option>Choose Department</option>
+				<option>Department</option>
 				<option>ECE</option>
 	<option>CSE</option>
 	<option>EEE</option>
 	<option>IT</option>
   </select>`
   			cell6.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" onchange="question()">
-				<option>Choose Department</option>
+				<option>Year</option>
 				<option>1</option>
 	<option>2</option>
 	<option>3</option>
@@ -176,7 +180,7 @@ input,label {
 
 		}
 		
-			function sheduled(papername){
+			function sheduled(papername,date,time,department,year){
 			var tableval=document.getElementById("sheduledtable");
 			var row=tableval.insertRow();
 			var cell1=row.insertCell(0);
@@ -188,25 +192,10 @@ input,label {
 			var cell7=row.insertCell(6);
 			cell1.innerHTML = tableval.rows.length-1;
 			cell2.innerHTML=papername;
-			cell3.innerHTML=`
-<input type="datetime-local" id="meeting-time"
-       name="meeting-time" disabled>`
-			cell4.innerHTML=`<div style="margin:0px" class="form-outline">
-  <input type="number" id="typeNumber" class="form-control" disabled/>
-  <label class="form-label" for="typeNumber">Time in Hrs</label>
-</div>`
-            cell5.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" disabled>
-	<option>ECE</option>
-	<option>CSE</option>
-	<option>EEE</option>
-	<option>IT</option>
-  </select>`
-  			cell6.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" disabled>
-	<option>1</option>
-	<option>2</option>
-	<option>3</option>
-	<option>4</option>
-  </select>`
+			cell3.innerHTML=date
+			cell4.innerHTML=time
+            cell5.innerHTML=department
+  			cell6.innerHTML=year
   			cell7.innerHTML=`<button type="button" style="margin-top:7px" class="btn btn-danger">Delete</button`
 
 		}
