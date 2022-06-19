@@ -91,8 +91,7 @@ input,label {
 	<table id="table1" class="table">
 		<thead>   
 			<tr>
-				<td style="width:10%">S.no</td>
-				<td style="width:30%">Exam Name</td>
+				<td style="width:40%">Exam Name</td>
 				<td style="width:15%">Schedule time</td>
 				<td style="width:15%">Time</td>
 				<td style="width:20%">Department</td>
@@ -149,34 +148,32 @@ input,label {
 			var cell4=row.insertCell(3);
 			var cell5=row.insertCell(4);
 			var cell6=row.insertCell(5);
-			var cell7=row.insertCell(6);
-			cell1.innerHTML = tableval.rows.length-1;
-			cell2.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" onchange="question()">
+			cell1.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" onchange="question()">
 				<option>Select Paper</option>
 				
   </select>`
-			cell3.innerHTML=`
+			cell2.innerHTML=`
 <input style="height:40px" type="datetime-local" id="meeting-time"
        name="meeting-time">`
-			cell4.innerHTML=`<div style="margin:0px" class="form-outline form-outline-lg">
+			cell3.innerHTML=`<div style="margin:0px" class="form-outline form-outline-lg">
   <input type="number" id="typeNumber" class="form-control form-control-lg" />
   <label class="form-label form-label-lg" for="typeNumber">Time in Hrs</label>
 </div>`
-            cell5.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" onchange="question()">
+            cell4.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" onchange="question()">
 				<option>Department</option>
 				<option>ECE</option>
 	<option>CSE</option>
 	<option>EEE</option>
 	<option>IT</option>
   </select>`
-  			cell6.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" onchange="question()">
+  			cell5.innerHTML=`<select class="form-select selectstyle" id="myoption" style="box-shadow:none;margin-top:7px" onchange="question()">
 				<option>Year</option>
 				<option>1</option>
 	<option>2</option>
 	<option>3</option>
 	<option>4</option>
   </select>`
-  			cell7.innerHTML=`<button type="button" style="margin-top:7px" class="btn btn-primary">Schedule</button`
+  			cell6.innerHTML=`<button type="button" style="margin-top:7px" class="btn btn-primary">Schedule</button`
 
 		}
 		
