@@ -81,12 +81,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     <tr>
       <td>
         <div>
-          <h3>Pass Percentage</h3>
-          <canvas class="middle" id="myChart2" style="width:100%;max-width:600px"></canvas>
-        </div>
-      </td>
-      <td>
-        <div>
           <h3>People DepartmentWise</h3>
           <canvas class="middle" id="myChart3" style="width:100%;max-width:600px"></canvas>
         </div>
@@ -143,30 +137,7 @@ new Chart("myChart1", {
   }
 });
 	</script>
-	<script>
-		var xValues = ["fail","pass"];
-var yValues = [60,40];
-var barColors = [
-  "#dc143c",
-  "#48d1cc",
-];
-
-new Chart("myChart2", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    title: {
-      display: true
-    }
-  }
-});
-	</script>
+	
 	<script>
 		
 		var val=0;
